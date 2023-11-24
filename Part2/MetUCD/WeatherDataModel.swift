@@ -124,7 +124,7 @@ struct OpenWeatherMapAPI {
         do {
             return try await fetchData(from: apiString)
         } catch {
-            print("Error fetching air pollution data: \(error)")
+            print("Error fetching air pollution forecast data: \(error)")
             return nil
         }
     }
@@ -154,19 +154,21 @@ struct GeoLocation: Codable, CustomStringConvertible {
 }
 
 // MARK: - CurrentWeather
+struct Coord: Codable {
+    let lon: Double
+    let lat: Double
+}
+struct Weather: Codable {
+    let id: Int
+    let main: String
+    let description: String
+    let icon: String
+}
+struct Clouds: Codable {
+    let all: Int
+}
 
 struct CurrentWeather: Codable {
-    struct Coord: Codable {
-        let lon: Double
-        let lat: Double
-    }
-    
-    struct Weather: Codable {
-        let id: Int
-        let main: String
-        let description: String
-        let icon: String
-    }
     
     struct Main: Codable {
         let temp: Double
@@ -180,10 +182,6 @@ struct CurrentWeather: Codable {
     struct Wind: Codable {
         let speed: Double
         let deg: Int
-    }
-    
-    struct Clouds: Codable {
-        let all: Int
     }
     
     struct Sys: Codable {
@@ -210,11 +208,6 @@ struct CurrentWeather: Codable {
 }
 
 struct AirPollution: Codable {
-    struct Coord: Codable {
-        let lon: Double
-        let lat: Double
-    }
-    
     struct PollutionList: Codable {
         struct Main: Codable {
             let aqi: Int
@@ -253,17 +246,6 @@ struct ForecastData: Codable {
         let temp_kf: Double
     }
     
-    struct Weather: Codable {
-        let id: Int
-        let main: String
-        let description: String
-        let icon: String
-    }
-    
-    struct Clouds: Codable {
-        let all: Int
-    }
-    
     struct Wind: Codable {
         let speed: Double
         let deg: Int
@@ -291,11 +273,6 @@ struct ForecastData: Codable {
         let timezone: Int
         let sunrise: Int
         let sunset: Int
-    }
-    
-    struct Coord: Codable {
-        let lat: Double
-        let lon: Double
     }
     
     struct ForecastList: Codable {

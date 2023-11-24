@@ -121,21 +121,20 @@ struct GeoLocation: Codable, CustomStringConvertible {
 
 }
 
+struct Coord: Codable {
+    let lon: Double
+    let lat: Double
+}
+struct Weather: Codable {
+    let id: Int
+    let main: String
+    let description: String
+    let icon: String
+}
+
 // MARK: - CurrentWeather
 
 struct CurrentWeather: Codable {
-    struct Coord: Codable {
-        let lon: Double
-        let lat: Double
-    }
-    
-    struct Weather: Codable {
-        let id: Int
-        let main: String
-        let description: String
-        let icon: String
-    }
-    
     struct Main: Codable {
         let temp: Double
         let feels_like: Double
@@ -178,11 +177,6 @@ struct CurrentWeather: Codable {
 }
 
 struct AirPollution: Codable {
-    struct Coord: Codable {
-        let lon: Double
-        let lat: Double
-    }
-    
     struct PollutionList: Codable {
         struct Main: Codable {
             let aqi: Int
@@ -221,13 +215,6 @@ struct ForecastData: Codable {
         let temp_kf: Double
     }
     
-    struct Weather: Codable {
-        let id: Int
-        let main: String
-        let description: String
-        let icon: String
-    }
-    
     struct Clouds: Codable {
         let all: Int
     }
@@ -259,11 +246,6 @@ struct ForecastData: Codable {
         let timezone: Int
         let sunrise: Int
         let sunset: Int
-    }
-    
-    struct Coord: Codable {
-        let lat: Double
-        let lon: Double
     }
     
     struct ForecastList: Codable {

@@ -29,33 +29,30 @@ func convertDMS(degrees: Double, latOrLon: String) -> String {
     return "\(abs(degree))°\(abs(minute))'\(abs(seconds))\" \(direction)"
 }
 
-func dayOfWeek(from dateString: String) -> String? {
+func dayOfWeekAbbreviated(from dateString: String) -> String? {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd"
-    
     guard let date = dateFormatter.date(from: dateString) else { return nil }
-    
-    let calendar = Calendar.current
-    let weekday = calendar.component(.weekday, from: date)
     
     let dateFormatter2 = DateFormatter()
     dateFormatter2.locale = Locale(identifier: "en_IE")
+    dateFormatter2.dateFormat = "EEE"
     
-    return dateFormatter2.weekdaySymbols[weekday - 1]
-}
-
-func getTodayInWeek() -> String {
-    let allDaysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-    let todayIndex = Calendar.current.dateComponents([.weekday], from: Date()).weekday
-    return allDaysOfWeek[(todayIndex ?? 0) - 1]
+    return dateFormatter2.string(from: date)
 }
 
 func rearrangeDaysInFutureWeek() -> [String] {
-    let allDaysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    let allDaysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
     guard let todayIndex = Calendar.current.dateComponents([.weekday], from: Date()).weekday else {
         return allDaysOfWeek
     }
     let shift = todayIndex - 1
     let reorderedDays = Array(allDaysOfWeek[shift ..< allDaysOfWeek.count] + allDaysOfWeek[0 ..< shift])
     return reorderedDays
+}
+
+func getTodayInWeek() -> String {
+    let allDaysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    let todayIndex = Calendar.current.dateComponents([.weekday], from: Date()).weekday
+    return allDaysOfWeek[(todayIndex ?? 0) - 1]
 }

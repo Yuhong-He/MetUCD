@@ -62,29 +62,69 @@ struct WeatherView: View {
             }
             
             Section(header: Text("5 Day Forecast").foregroundStyle(.gray)) {
-                if let forecast = viewModel.getForecast {
+                if let forecastByDay = viewModel.getForecast {
                     let orderedWeekdays = rearrangeDaysInFutureWeek()
                     let today = getTodayInWeek()
                     ForEach(orderedWeekdays, id: \.self) { day in
                         let displayedDay = today == day ? "Today" : day
-                        if let temperature = forecast[day] {
+                        if let forecast = forecastByDay.first(where: { $0.day == day }) {
                             HStack {
-                                HStack {
-                                    Text(displayedDay)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .foregroundColor(.blue)
-                                }
-                                HStack {
-                                    Image(systemName: "thermometer.low").foregroundColor(.gray)
-                                    Text("(L: \(temperature.min)° H: \(temperature.max)°)")
-                                        .frame(maxWidth: .infinity, alignment: .trailing)
-                                        .foregroundColor(.gray)
-                                }
+                                VStack {
+                                    HStack {
+                                        Text(displayedDay).font(.system(size: 15)).foregroundColor(.blue)
+                                        Spacer()
+                                        Image(systemName: "thermometer.low").font(.system(size: 15)).foregroundColor(.gray)
+                                        Text("\(forecast.min)°").font(.system(size: 15)).foregroundColor(.gray)
+                                        ZStack(alignment: .leading) {
+                                            RoundedRectangle(cornerRadius: 3)
+                                                .foregroundColor(Color.gray)
+                                                .frame(width: 80, height: 5)
+                                            
+                                            LinearGradient(gradient: Gradient(colors: [Color.blue, Color.red]), startPoint: .leading, endPoint: .trailing)
+                                                .frame(width: 80, height: 5)
+                                                .mask(RoundedRectangle(cornerRadius: 3))
+                                        }
+                                        Image(systemName: "thermometer.low").font(.system(size: 15)).foregroundColor(.gray)
+                                        Text("\(forecast.max)°").font(.system(size: 15)).foregroundColor(.gray)
+                                    }
+                                    HStack {
+                                        ForEach(forecast.hourly, id: \.hour) { hourForecast in
+                                            Spacer()
+                                            VStack(spacing: 2) {
+                                                Text("\(hourForecast.hour)").font(.system(size: 12)).foregroundColor(.black)
+                                                AsyncImage(url: URL(string: hourForecast.url)) { phase in
+                                                    switch phase {
+                                                    case .empty:
+                                                        ProgressView()
+                                                    case .success(let image):
+                                                        image
+                                                            .resizable()
+                                                            .scaledToFit()
+                                                            .frame(width: 25, height: 25)
+                                                            .background(Color.gray.opacity(0.2))
+                                                            .clipShape(RoundedRectangle(cornerRadius: 5))
+                                                    case .failure:
+                                                        Image(systemName: "xmark.octagon")
+                                                            .resizable()
+                                                            .scaledToFit()
+                                                            .frame(width: 25, height: 25)
+                                                            .foregroundColor(.red)
+                                                            .background(Color.gray.opacity(0.2))
+                                                            .clipShape(RoundedRectangle(cornerRadius: 5))
+                                                    @unknown default:
+                                                        EmptyView()
+                                                    }
+                                                }
+                                            }
+                                            Spacer()
+                                        }
+                                    }
+                                }.frame(height: 50)
                             }
                         }
                     }
                 } else {
-                    Text(alterText)
+                    Text(alterText).foregroundColor(.black)
                 }
             }
             
@@ -120,7 +160,7 @@ struct WeatherView: View {
                         }
                     }
                 } else {
-                    Text(alterText)
+                    Text(alterText).foregroundColor(.black)
                 }
             } header: {
                 Text("Air Quality: \(viewModel.getAirQuality ?? alterText)")
@@ -159,7 +199,7 @@ struct WeatherView: View {
                         }
                     }
                 } else {
-                    Text(alterText)
+                    Text(alterText).foregroundColor(.black)
                 }
             } header: {
                 Text("Air Pollution Index Forecast")

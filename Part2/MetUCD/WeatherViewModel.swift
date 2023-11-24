@@ -206,25 +206,54 @@ import CoreLocation
         return arr
     }
     
-    var getForecast: [String: (min: Int, max: Int)]? {
+    struct ForecastByHour {
+        let hour: String
+        let url: String
+        let min: Int
+        let max: Int
+    }
+    
+    struct ForecastByDay {
+        let day: String
+        let min: Int
+        let max: Int
+        let hourly: [ForecastByHour]
+    }
+    
+    var getForecast: [ForecastByDay]? {
         guard let forecastData = dataModel.forecastData else { return nil }
-        var temperaturesByDay: [String: (min: Int, max: Int)] = [:]
+        var forecastByDay: [ForecastByDay] = []
+        
+        var forecastByDate: [String: [ForecastByHour]] = [:]
+        
         for forecast in forecastData.list {
             let date = Date(timeIntervalSince1970: TimeInterval(forecast.dt))
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
             let dateString = dateFormatter.string(from: date)
-            let dayOfWeekStr = dayOfWeek(from: dateString)
+            let dayOfWeekStr = dayOfWeekAbbreviated(from: dateString)
             guard let dayOfWeek = dayOfWeekStr else { return nil }
-            if let temperature = temperaturesByDay[dayOfWeek] {
-                let newMin = min(temperature.min, Int(forecast.main.temp_min))
-                let newMax = max(temperature.max, Int(forecast.main.temp_max))
-                temperaturesByDay[dayOfWeek] = (Int(newMin), Int(newMax))
-            } else {
-                temperaturesByDay[dayOfWeek] = (Int(forecast.main.temp_min), Int(forecast.main.temp_max))
+            
+            if forecastByDate[dayOfWeek] == nil {
+                forecastByDate[dayOfWeek] = []
             }
+            
+            let hour = Calendar.current.component(.hour, from: date)
+            let icon = forecast.weather.first?.icon ?? ""
+            let min = Int(forecast.main.temp_min)
+            let max = Int(forecast.main.temp_max)
+            let url = "https://openweathermap.org/img/wn/\(icon)@2x.png"
+            let forecastByHour = ForecastByHour(hour: "\(hour)H", url: url, min: min, max: max)
+            forecastByDate[dayOfWeek]?.append(forecastByHour)
         }
-        return temperaturesByDay
+        
+        for (day, hourlyForecasts) in forecastByDate {
+            let minTemp = hourlyForecasts.map { Int($0.min) }.min() ?? 0
+            let maxTemp = hourlyForecasts.map { Int($0.max) }.max() ?? 0
+            let forecastDay = ForecastByDay(day: day, min: minTemp, max: maxTemp, hourly: hourlyForecasts)
+            forecastByDay.append(forecastDay)
+        }
+        return forecastByDay
     }
     
     struct AirQualityIndex {
