@@ -227,6 +227,21 @@ import CoreLocation
         return temperaturesByDay
     }
     
+    struct AirQualityIndex {
+        var time: Date
+        var aqi: Int
+    }
+    
+    var getAirPollutionForecast: [AirQualityIndex]? {
+        guard let airPollutionForecastData = dataModel.airPollutionForecastData else { return nil }
+        var airQualityIndex: [AirQualityIndex] = []
+        for airPollutionForecast in airPollutionForecastData.list {
+            let time = Date(timeIntervalSince1970: TimeInterval(airPollutionForecast.dt))
+            airQualityIndex += [AirQualityIndex(time: time, aqi: airPollutionForecast.main.aqi)]
+        }
+        return airQualityIndex
+    }
+    
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
         case .authorizedWhenInUse:  // Location services are available.

@@ -14,12 +14,14 @@ struct WeatherDataModel {
     private(set) var currentWeatherData: CurrentWeather?
     private(set) var airPollutionData: AirPollution?
     private(set) var forecastData: ForecastData?
+    private(set) var airPollutionForecastData: AirPollution?
     
     private mutating func clear() {
         geoLocationData = nil
         currentWeatherData = nil
         airPollutionData = nil
         forecastData = nil
+        airPollutionForecastData = nil
     }
     
     mutating func fetch(for location: String) async {
@@ -31,6 +33,7 @@ struct WeatherDataModel {
         currentWeatherData = await OpenWeatherMapAPI.currentWeather(lat: lat, lon: lon)
         airPollutionData = await OpenWeatherMapAPI.airPollution(lat: lat, lon: lon)
         forecastData = await OpenWeatherMapAPI.forecast(lat: lat, lon: lon)
+        airPollutionForecastData = await OpenWeatherMapAPI.airPollutionForecast(lat: lat, lon: lon)
     }
     
     mutating func tapFetch(lat: Double, lon: Double) async {
@@ -39,6 +42,7 @@ struct WeatherDataModel {
         currentWeatherData = await OpenWeatherMapAPI.currentWeather(lat: lat, lon: lon)
         airPollutionData = await OpenWeatherMapAPI.airPollution(lat: lat, lon: lon)
         forecastData = await OpenWeatherMapAPI.forecast(lat: lat, lon: lon)
+        airPollutionForecastData = await OpenWeatherMapAPI.airPollutionForecast(lat: lat, lon: lon)
     }
 }
 
@@ -111,6 +115,16 @@ struct OpenWeatherMapAPI {
             return try await fetchData(from: apiString)
         } catch {
             print("Error fetching forecast data: \(error)")
+            return nil
+        }
+    }
+    
+    static func airPollutionForecast(lat: Double, lon: Double) async -> AirPollution? {
+        let apiString = "data/2.5/air_pollution/forecast?lat=\(lat)&lon=\(lon)&units=metric"
+        do {
+            return try await fetchData(from: apiString)
+        } catch {
+            print("Error fetching air pollution data: \(error)")
             return nil
         }
     }

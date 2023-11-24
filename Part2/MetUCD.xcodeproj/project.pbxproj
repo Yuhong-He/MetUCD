@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		BC9488F62B0EC24B00B79582 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9488F52B0EC24B00B79582 /* MapView.swift */; };
-		BC9488F82B0EC26400B79582 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9488F72B0EC26400B79582 /* MapViewModel.swift */; };
 		BC9488FA2B0EC4B100B79582 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9488F92B0EC4B100B79582 /* ContentView.swift */; };
 		BCA503072B0ABFE40071FA51 /* MetUCDApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA503062B0ABFE40071FA51 /* MetUCDApp.swift */; };
 		BCA503092B0ABFE40071FA51 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA503082B0ABFE40071FA51 /* WeatherView.swift */; };
@@ -21,7 +20,6 @@
 
 /* Begin PBXFileReference section */
 		BC9488F52B0EC24B00B79582 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
-		BC9488F72B0EC26400B79582 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		BC9488F92B0EC4B100B79582 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		BCA503032B0ABFE40071FA51 /* MetUCD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetUCD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCA503062B0ABFE40071FA51 /* MetUCDApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetUCDApp.swift; sourceTree = "<group>"; };
@@ -71,7 +69,6 @@
 				BCA5030C2B0ABFE50071FA51 /* Preview Content */,
 				BCA5032A2B0C34380071FA51 /* WeatherUtils.swift */,
 				BC9488F52B0EC24B00B79582 /* MapView.swift */,
-				BC9488F72B0EC26400B79582 /* MapViewModel.swift */,
 				BC9488F92B0EC4B100B79582 /* ContentView.swift */,
 			);
 			path = MetUCD;
@@ -160,7 +157,6 @@
 				BC9488FA2B0EC4B100B79582 /* ContentView.swift in Sources */,
 				BCA503292B0BCA610071FA51 /* WeatherViewModel.swift in Sources */,
 				BCA503092B0ABFE40071FA51 /* WeatherView.swift in Sources */,
-				BC9488F82B0EC26400B79582 /* MapViewModel.swift in Sources */,
 				BCA5032B2B0C34380071FA51 /* WeatherUtils.swift in Sources */,
 				BCA503072B0ABFE40071FA51 /* MetUCDApp.swift in Sources */,
 			);
