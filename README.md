@@ -11,5 +11,10 @@ This is a Meteorological App. It displays a map for the user, and the user can t
 
 ## Demo
 
+#### YouTube
+
 [![YouTube](https://i9.ytimg.com/vi_webp/lXrxQIwe42E/mq3.webp?sqp=CPTGg6sG-oaymwEmCMACELQB8quKqQMa8AEB-AHYBIACgAqKAgwIABABGFYgZShGMA8=&rs=AOn4CLDmyDcpyCx3Y2YfQEy4GePUg7GQ9g)](https://youtu.be/lXrxQIwe42E)
 
+#### Bilibili
+
+[![Bilibili](https://i2.hdslb.com/bfs/archive/22804d8449eebaec40fee9bd46c08e7d4c0d093b.jpg)](https://www.bilibili.com/video/BV1AC4y127nm/)
