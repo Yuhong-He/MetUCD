@@ -105,11 +105,13 @@ struct MapView: View {
                                 .padding(.bottom, 10)
                         }
                         Button {
-                            camera = .region(
-                                MKCoordinateRegion(
-                                    center: dataViewModel.currentLocation!,
-                                    latitudinalMeters: latitudinalMeters,
-                                    longitudinalMeters: longitudinalMeters))
+                            if let currentLocation = dataViewModel.currentLocation {
+                                camera = .region(
+                                    MKCoordinateRegion(
+                                        center: currentLocation,
+                                        latitudinalMeters: latitudinalMeters,
+                                        longitudinalMeters: longitudinalMeters))
+                            }
                         } label: {
                             Circle()
                                 .frame(width: 30, height: 30)
@@ -249,6 +251,33 @@ struct MapView: View {
                                         Text("Location Not Found")
                                             .padding(.vertical, 2)
                                             .font(.system(size: 20))
+                                            .foregroundColor(.black)
+                                        Spacer()
+                                    }
+                                    Spacer()
+                                }
+                            }
+                        )
+                }
+                .padding(.bottom, 30)
+            }
+            if dataViewModel.currentLocation == nil {
+                VStack {
+                    Rectangle()
+                        .frame(height: 50)
+                        .frame(width: 250)
+                        .foregroundColor(Color.white.opacity(0.8))
+                        .cornerRadius(10)
+                        .overlay(
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 2)
+                                VStack {
+                                    Spacer()
+                                    HStack {
+                                        Spacer()
+                                        Text("We don't have your location permission")
+                                            .padding(.vertical, 2)
+                                            .font(.system(size: 10))
                                             .foregroundColor(.black)
                                         Spacer()
                                     }
