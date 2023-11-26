@@ -1,6 +1,14 @@
 ## Intro
 This is a Meteorological App. It displays a map for the user, and the user can tap the map to put a pin or search for a place, then the weather info of that place will be generated on a widget modal box at the bottom. When click the modal box, a sheet will pop up and display all the details of weather information.
 
+#### Part 1
+
+Basic weather and forecast list view.
+
+#### Part 2
+
+Final map view with part 1 embedded in the popup sheet.
+
 ## Version
 - iOS 17.0
 - Xcode: 15.0.1
